@@ -43,6 +43,5 @@ jobs:
         EOL
 
         cd /home/debian/apps/City-Guide
-        npm run stop
         npm run start
         EOF
