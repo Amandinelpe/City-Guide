@@ -25,5 +25,25 @@ jobs:
         ssh -o StrictHostKeyChecking=no ${{ secrets.USERNAME }}@${{ secrets.HOST }} << 'EOF'
           cd /home/debian/apps/City-Guide
           git pull origin main
+          # Pour l'application "app"
+          cd /home/debian/apps/City-Guide/app
+          cat > .env << 'EOL'
+          REACT_APP_GRAPHQL_URI=${{ secrets.REACT_APP_GRAPHQL_URI }}
+          REACT_GOOGLE_API_MAPS_KEY=${{ secrets.REACT_GOOGLE_API_MAPS_KEY }}
+          EOL
+
+          # Pour l'application "server"
+          cd /home/debian/apps/City-Guide/server
+          cat > .env << 'EOL'
+          PORT=${{ secrets.GRAPHQL_PORT }}
+          DATABASE_TYPE=${{ secrets.DATABASE_TYPE }}
+          DATABASE_HOST=${{ secrets.DATABASE_HOST }}
+          DATABASE_PORT=${{ secrets.DATABASE_PORT }}
+          DATABASE_USERNAME=${{ secrets.DATABASE_USERNAME }}
+          DATABASE_PASSWORD=${{ secrets.DATABASE_PASSWORD }}
+          DATABASE_NAME=${{ secrets.DATABASE_NAME }}
+          JWT_SECRET=${{ secrets.JWT_SECRET }}
+          REACT_APP_URI=${{ secrets.REACT_APP_URI }}
+          EOL
           npm run start
         EOF
