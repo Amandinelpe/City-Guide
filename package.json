@@ -1,0 +1,11 @@
+{
+  "name": "city-guide",
+  "version": "1.0.0",
+  "scripts": {
+    "dev": "docker compose up --build",
+    "start": "docker compose up --build --remove-orphans -d",
+    "stop": "docker compose down",
+    "db": "docker compose up db"
+  },
+  "license": "ISC"
+}
