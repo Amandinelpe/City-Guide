@@ -23,6 +23,10 @@ jobs:
     - name: Deploy to VPS
       run: |
         ssh -o StrictHostKeyChecking=no ${{ secrets.USERNAME }}@${{ secrets.HOST }} << 'EOF'
+        cd /home/debian/apps/City-Guide
+        npm run stop
+        npm run clean
+        
         cd /home/debian/apps/City-Guide/app
         cat > .env << 'EOL'
         REACT_APP_GRAPHQL_URI=${{ secrets.REACT_APP_GRAPHQL_URI }}
@@ -43,6 +47,5 @@ jobs:
         EOL
 
         cd /home/debian/apps/City-Guide
-        npm run stop
         npm run start
         EOF
