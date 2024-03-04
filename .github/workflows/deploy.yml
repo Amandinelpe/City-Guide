@@ -28,7 +28,7 @@ jobs:
           REACT_APP_GRAPHQL_URI=${{ secrets.REACT_APP_GRAPHQL_URI }}
           REACT_GOOGLE_API_MAPS_KEY=${{ secrets.REACT_GOOGLE_API_MAPS_KEY }}
           EOL
-        
+
           cd /home/debian/apps/City-Guide/server
           cat > .env << 'EOL'
           PORT=${{ secrets.GRAPHQL_PORT }}
@@ -41,8 +41,8 @@ jobs:
           JWT_SECRET=${{ secrets.JWT_SECRET }}
           REACT_APP_URI=${{ secrets.REACT_APP_URI }}
           EOL
-        
+
           cd /home/debian/apps/City-Guide
           npm run stop
           npm run start
-        EOF
+          EOF
