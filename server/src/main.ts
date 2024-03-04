@@ -10,7 +10,7 @@ const configService = new ConfigService();
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   app.enableCors({
-    origin: configService.getOrThrow('REACT_APP_URI'),
+    origin: [configService.getOrThrow('REACT_APP_URI'), configService.getOrThrow('REACT_APP_PRODUCTION_URI')],
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
     allowedHeaders: 'Content-Type, Accept',
     credentials: true,
