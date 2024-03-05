@@ -18,10 +18,10 @@ const configService = new ConfigService();
     PassportModule,
     UsersModule,
     JwtModule.register({
-      signOptions: { expiresIn: '60s' },
+      signOptions: { expiresIn: '7d' },
       secret: configService.getOrThrow('JWT_SECRET')
     })
   ],
   providers: [AuthService, AuthResolver, LocalStrategy, JwtStrategy]
 })
-export class AuthModule {}
+export class AuthModule { }

@@ -10,10 +10,13 @@ export class AuthService {
   constructor(
     private usersService: UsersService,
     private jwtService: JwtService,
-  ) {}
+  ) { }
 
   async validateUser(email: string, password: string): Promise<any> {
     const user = await this.usersService.findOneByEmail(email);
+    if (!user) {
+      return null;
+    }
 
     const valid = await bcrypt.compare(password, user.password);
 
@@ -46,7 +49,8 @@ export class AuthService {
       throw new Error('User already exists');
     }
 
-    const password = await bcrypt.hash(createUserInput.password, 10);
+    const salt = await bcrypt.genSalt(10);
+    const password = await bcrypt.hash(createUserInput.password, salt);
 
     return this.usersService.create({
       ...createUserInput,
