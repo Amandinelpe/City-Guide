@@ -44,6 +44,7 @@ jobs:
         DATABASE_PASSWORD=${{ secrets.DATABASE_PASSWORD }}
         DATABASE_NAME=${{ secrets.DATABASE_NAME }}
         JWT_SECRET=${{ secrets.JWT_SECRET }}
+        REACT_APP_PRODUCTION_URI=${{ secrets.REACT_APP_PRODUCTION_URI }}
         REACT_APP_URI=${{ secrets.REACT_APP_URI }}
         EOL
 
