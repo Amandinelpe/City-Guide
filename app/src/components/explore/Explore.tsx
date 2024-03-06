@@ -30,7 +30,7 @@ const options = {
 
 export const Explore = () => {
   const { isLoaded } = useJsApiLoader({
-    googleMapsApiKey: `${process.env.REACT_APP_GOOGLE_API_MAPS_KEY}`,
+    googleMapsApiKey: `AIzaSyAMqxud4Haf1SGmX2O3FyVeRb8qQwuSNCY`,
   });
 
   const [selectedCity, setSelectedCity] = useState<ICity | null>(null);
@@ -51,6 +51,15 @@ export const Explore = () => {
     setSelectedPlace(place);
   };
 
+  const handleReviewComment = (e: any) => {
+    setReviewComment(e.target.value);
+  }
+
+  const handleReviewRating = (e: any, value: number | null) => {
+    e.preventDefault();
+    setReviewRating(value);
+  }
+
   const [addReview] = useMutation(CREATE_REVIEW, {
     refetchQueries: [
       {
@@ -59,6 +68,19 @@ export const Explore = () => {
       },
     ],
   });
+
+  const handleAddReview = () => {
+    addReview({
+      variables: {
+        input: {
+          placeId: selectedPlace?.id,
+          userId: Cookies.get("userId"),
+          rating: reviewRating,
+          comment: reviewComment,
+        },
+      },
+    });
+  }
 
   const { data: getcity } = useQuery<IGetCity>(GET_CITIES);
 
@@ -279,40 +301,28 @@ export const Explore = () => {
                 {selectedPlace?.reviews.filter(
                   (review: Review) => review.user.id === Cookies.get("userId")
                 ).length === 0 && (
-                  <div className="flex flex-col justify-center items-center gap-4">
-                    <textarea
-                      className="border-2 border-blue p-2.5 w-full rounded outline-none"
-                      placeholder="Votre avis..."
-                      value={reviewComment}
-                      onChange={(e) => setReviewComment(e.target.value)}
-                    />
-                    <Rating
-                      name="simple-controlled"
-                      value={reviewRating}
-                      onChange={(event, newValue) => {
-                        event.preventDefault();
-                        setReviewRating(newValue);
-                      }}
-                    />
-                    <button
-                      className="border w-36 h-10 rounded-lg bg-blue text-white text-lg shadow-lg"
-                      onClick={() => {
-                        addReview({
-                          variables: {
-                            input: {
-                              placeId: selectedPlace?.id,
-                              userId: Cookies.get("userId"),
-                              rating: reviewRating,
-                              comment: reviewComment,
-                            },
-                          },
-                        });
-                      }}
-                    >
-                      Valider
-                    </button>
-                  </div>
-                )}
+                    <div className="flex flex-col justify-center items-start gap-4 w-full">
+                      <textarea
+                        className="border-2 border-blue p-2.5 w-4/5 rounded outline-none"
+                        placeholder="Votre avis..."
+                        value={reviewComment}
+                        onChange={handleReviewComment}
+                      />
+                      <Rating
+                        name="simple-controlled"
+                        value={reviewRating}
+                        onChange={(e, value) => handleReviewRating(e, value)}
+                      />
+                      <button
+                        className={`border w-36 h-10 rounded-lg bg-blue text-white text-lg shadow-lg 
+                                  ${!reviewRating ? "cursor-not-allowed opacity-50" : "cursor-pointer"}`}
+                        onClick={handleAddReview}
+                        disabled={!reviewRating}
+                      >
+                        Ajouter
+                      </button>
+                    </div>
+                  )}
               </div>
             )}
           </div>
