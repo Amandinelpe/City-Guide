@@ -36,7 +36,7 @@ jobs:
 
         cd /home/debian/apps/City-Guide/server
         cat > .env << 'EOL'
-        PORT=${{ secrets.GRAPHQL_PORT }}
+        SERVER_PORT=${{ secrets.SERVER_PORT }}
         DATABASE_TYPE=${{ secrets.DATABASE_TYPE }}
         DATABASE_HOST=${{ secrets.DATABASE_HOST }}
         DATABASE_PORT=${{ secrets.DATABASE_PORT }}
@@ -44,7 +44,7 @@ jobs:
         DATABASE_PASSWORD=${{ secrets.DATABASE_PASSWORD }}
         DATABASE_NAME=${{ secrets.DATABASE_NAME }}
         JWT_SECRET=${{ secrets.JWT_SECRET }}
-        REACT_APP_URI=${{ secrets.REACT_APP_URI }}
+        CORS_ALLOWED_ORIGINS=${{ secrets.CORS_ALLOWED_ORIGINS }}
         EOL
 
         cd /home/debian/apps/City-Guide

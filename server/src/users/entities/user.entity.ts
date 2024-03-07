@@ -1,7 +1,8 @@
 import { ObjectType, Field, Int, ID } from '@nestjs/graphql';
 import { BeforeInsert, Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
-import { Role } from './role.entity';
 import { v4 as uuidv4 } from 'uuid';
+import * as bcrypt from 'bcrypt';
+import { Role } from './role.entity';
 import { Review } from '../../reviews/entities/review.entity';
 
 @Entity()
@@ -13,7 +14,7 @@ export class User {
 
   @BeforeInsert()
   createUuid() {
-      this.id = uuidv4();
+    this.id = uuidv4();
   }
 
   @Column()
@@ -39,4 +40,13 @@ export class User {
   @OneToMany(() => Review, review => review.user)
   @Field(() => [Review])
   reviews: Review[];
+}
+
+export async function hashPassword(password: string): Promise<string> {
+  const salt = await bcrypt.genSalt(10);
+  return await bcrypt.hash(password, salt);
+}
+
+export async function verifyPassword(password: string, hashedPassword: string) {
+  return bcrypt.compare(password, hashedPassword);
 }

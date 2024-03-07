@@ -2,8 +2,8 @@ import { Injectable } from '@nestjs/common';
 import { UsersService } from 'src/users/users.service';
 import { JwtService } from '@nestjs/jwt';
 import { CreateUserInput } from '../users/dto/create-user.input';
-import * as bcrypt from 'bcrypt';
 import { LoginUserInput } from './dto/login-user.input';
+import { hashPassword, verifyPassword } from 'src/users/entities/user.entity';
 
 @Injectable()
 export class AuthService {
@@ -18,7 +18,7 @@ export class AuthService {
       return null;
     }
 
-    const valid = await bcrypt.compare(password, user.password);
+    const valid = await verifyPassword(password, user.password);
 
     if (user && valid) {
       const { password, ...result } = user;
@@ -49,8 +49,7 @@ export class AuthService {
       throw new Error('User already exists');
     }
 
-    const salt = await bcrypt.genSalt(10);
-    const password = await bcrypt.hash(createUserInput.password, salt);
+    const password = await hashPassword(user.password);
 
     return this.usersService.create({
       ...createUserInput,

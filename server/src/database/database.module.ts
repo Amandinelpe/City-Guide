@@ -1,6 +1,12 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule, TypeOrmModuleOptions } from '@nestjs/typeorm';
+import { City } from 'src/cities/entities/city.entity';
+import { PlaceType } from 'src/place-types/entities/place-type.entity';
+import { Place } from 'src/places/entities/place.entity';
+import { Review } from 'src/reviews/entities/review.entity';
+import { Role } from 'src/users/entities/role.entity';
+import { User } from 'src/users/entities/user.entity';
 
 @Module({
   imports: [
@@ -8,12 +14,13 @@ import { TypeOrmModule, TypeOrmModuleOptions } from '@nestjs/typeorm';
       imports: [ConfigModule],
       useFactory: (configService: ConfigService) =>
         ({
-          type: configService.getOrThrow('DATABASE_TYPE'),
-          host: configService.getOrThrow('DATABASE_HOST'),
-          port: parseInt(configService.getOrThrow('DATABASE_PORT'), 10),
-          username: configService.getOrThrow('DATABASE_USERNAME'),
-          password: configService.getOrThrow('DATABASE_PASSWORD'),
-          database: configService.getOrThrow('DATABASE_NAME'),
+          type: configService.get<string>('DATABASE_TYPE'),
+          host: configService.get<string>('DATABASE_HOST'),
+          port: configService.get<number>('DATABASE_PORT'),
+          username: configService.get<string>('DATABASE_USERNAME'),
+          password: configService.get<string>('DATABASE_PASSWORD'),
+          database: configService.get<string>('DATABASE_NAME'),
+          entities: [City, PlaceType, Place, Review, User, Role],
           autoLoadEntities: true,
           synchronize: true,
         }) as TypeOrmModuleOptions,
@@ -21,4 +28,4 @@ import { TypeOrmModule, TypeOrmModuleOptions } from '@nestjs/typeorm';
     }),
   ],
 })
-export class DatabaseModule {}
+export class DatabaseModule { }

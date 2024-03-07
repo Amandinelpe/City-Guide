@@ -1,20 +1,16 @@
 import { NestFactory } from '@nestjs/core';
-import { config } from 'dotenv';
 import { ConfigService } from '@nestjs/config';
 import { AppModule } from './app.module';
 
-config();
-
-const configService = new ConfigService();
-
 async function start() {
   const app = await NestFactory.create(AppModule);
+  const configService = app.get(ConfigService);
   app.enableCors({
-    origin: configService.getOrThrow('REACT_APP_URI'),
+    origin: configService.get<string>('CORS_ALLOWED_ORIGINS').split(','),
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
     allowedHeaders: 'Content-Type, Accept',
     credentials: true,
   });
-  await app.listen(process.env.PORT || 4000);
+  await app.listen(configService.get<number>('SERVER_PORT'));
 }
 start();
