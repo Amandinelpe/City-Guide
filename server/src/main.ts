@@ -7,7 +7,7 @@ config();
 
 const configService = new ConfigService();
 
-async function bootstrap() {
+async function start() {
   const app = await NestFactory.create(AppModule);
   app.enableCors({
     origin: configService.getOrThrow('REACT_APP_URI'),
@@ -17,4 +17,4 @@ async function bootstrap() {
   });
   await app.listen(process.env.PORT || 4000);
 }
-bootstrap();
+start();

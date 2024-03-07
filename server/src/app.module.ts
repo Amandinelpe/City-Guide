@@ -33,7 +33,6 @@ import { extname } from 'path';
           const hour = now.getHours().toString().padStart(2, '0');
           const minute = now.getMinutes().toString().padStart(2, '0');
           const second = now.getSeconds().toString().padStart(2, '0');
-          
           const formattedDate = `${year}${month}${day}${hour}${minute}${second}`;
           const extension = extname(file.originalname);
           const filename = `${formattedDate}${extension}`;
@@ -52,4 +51,3 @@ import { extname } from 'path';
   controllers: [UploadController, FilesController],
 })
 export class AppModule {}
-
