@@ -49,7 +49,7 @@ export class AuthService {
       throw new Error('User already exists');
     }
 
-    const password = await hashPassword(user.password);
+    const password = await hashPassword(createUserInput.password);
 
     return this.usersService.create({
       ...createUserInput,
