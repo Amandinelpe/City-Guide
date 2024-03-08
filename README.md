@@ -56,7 +56,7 @@ sudo apt install git-all -y
 mkdir apps && cd apps && git clone https://github.com/Amandinelpe/City-Guide.git && cd City-Guide
 ```
 
-## 3. Install Docker
+## 3. Install Docker (no need for Debian 10 with Docker pre-installation)
 
 ```sh
 sh scripts/install_docker.sh
