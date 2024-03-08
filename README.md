@@ -94,13 +94,13 @@ Exec the migration script :
 docker compose exec city-guide-backend npm run typeorm:run-migration
 ```
 
-## 9. Install Caddy
+## 7. Install Caddy
 
 ```sh
 sh scripts/install_caddy.sh
 ```
 
-## 10. Configure Caddy
+## 8. Configure Caddy
 
 ```sh
 sudo nano /etc/caddy/Caddyfile
