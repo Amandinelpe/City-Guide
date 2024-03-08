@@ -55,10 +55,10 @@ $ npm run typeorm:create-migration -d ./migrations/InsertPlaceTypes
 $ docker-compose exec backend npm run typeorm:generate-migration -d ./migrations/DatabaseBackup
 
 # run migration
-$ docker-compose exec backend npm run typeorm:run-migration
+$ docker compose exec backend npm run typeorm:run-migration
 
 # revert migration
-$ docker-compose exec backend npm run typeorm:revert-migration
+$ docker compose exec backend npm run typeorm:revert-migration
 ```
 
 ## Test
