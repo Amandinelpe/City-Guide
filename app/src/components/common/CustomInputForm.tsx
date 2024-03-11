@@ -1,6 +1,6 @@
 import React, { forwardRef } from 'react';
 
-interface CustomInputFormProps {
+type CustomInputFormProps = {
   type: string;
   label: string;
 }

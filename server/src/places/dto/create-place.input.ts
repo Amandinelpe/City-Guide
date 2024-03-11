@@ -2,7 +2,7 @@ import { InputType, Field, ID } from '@nestjs/graphql';
 
 @InputType()
 export class CreatePlaceInput {
-    @Field()
+    @Field(() => String)
     name: string;
 
     @Field(() => Number)
@@ -11,7 +11,7 @@ export class CreatePlaceInput {
     @Field(() => Number)
     longitude: number;
 
-    @Field()
+    @Field(() => String)
     address: string;
 
     @Field(() => ID)

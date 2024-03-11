@@ -4,7 +4,7 @@ import linkedinLogo from "../assets/linkedin.png";
 
 const Footer = () => {
   return (
-    <div className="flex flex-col md:flex-row h-auto w-screen bg-blue text-white p-5 gap-5">
+    <div className="footer flex flex-col md:flex-row h-auto w-full bg-blue text-white p-5 gap-5">
       <div className="flex flex-col gap-1 lg:w-1/2">
         <p className="text-xl font-bold">City Guide</p>
         <div className="w-3/4">

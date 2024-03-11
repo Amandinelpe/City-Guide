@@ -8,6 +8,7 @@ export const ADD_CITY = gql`
       description
       latitude
       longitude
+      image
     }
   }
 `;
@@ -55,6 +56,36 @@ export const UPDATE_PLACETYPE = gql`
       googlePlaceTypeName
       name
       activated
+    }
+  }
+`;
+
+export const UPDATE_CITY = gql`
+  mutation UpdateCity($input: UpdateCityInput!) {
+    updateCity(updateCityInput: $input) {
+      id
+      name
+      description
+      latitude
+      longitude
+      image
+    }
+  }
+`;
+
+export const UPDATE_PLACE = gql`
+  mutation UpdatePlace($input: UpdatePlaceInput!) {
+    updatePlace(updatePlaceInput: $input) {
+      id
+      name
+      placeType {
+        id
+        name
+      }
+      city {
+        id
+        name
+      }
     }
   }
 `;

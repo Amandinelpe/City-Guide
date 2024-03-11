@@ -1,0 +1,39 @@
+@import "https://fonts.googleapis.com/css?family=Roboto";
+
+.ag-theme-quartz {
+  --ag-header-height: 50px;
+  --ag-active-color: #E57373;
+
+  --ag-font-size: 17px;
+  --ag-font-family: Barlow, sans-serif, Stick No Bills;
+  --ag-header-background-color: #1A2B49;
+  --ag-header-cell-hover-background-color: #E57373;
+  --ag-header-foreground-color: #fff;
+  --ag-icon-font-color-desc: #fff;
+  --ag-icon-font-color-asc: #fff;
+  --ag-border-radius: 10px;
+  --ag-borders: solid 1px;
+
+  --ag-control-panel-background-color: #eee;
+  --ag-input-focus-border-color: color-mix(in srgb, transparent, #181d1f 15%);
+  --ag-input-focus-box-shadow: none;
+
+  --ag-range-selection-border-color: transparent;
+}
+
+.ag-root ::-webkit-scrollbar {
+  width: 2em;
+  height: 2em;
+}
+
+.ag-root ::-webkit-scrollbar-button {
+  display: none;
+}
+
+.ag-root ::-webkit-scrollbar-track-piece {
+  background: #eee;
+}
+
+.ag-root ::-webkit-scrollbar-thumb {
+  background: #1A2B49;
+}

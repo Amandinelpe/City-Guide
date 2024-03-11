@@ -1,8 +1,10 @@
 import ReactDOM from "react-dom/client";
+import { ApolloClient, InMemoryCache, ApolloProvider } from "@apollo/client";
+import { SnackbarProvider } from 'notistack';
 import "./index.css";
 import App from "./App";
-import { ApolloClient, InMemoryCache, ApolloProvider } from "@apollo/client";
 import reportWebVitals from "./reportWebVitals";
+
 
 const client = new ApolloClient({
   uri: `${process.env.REACT_APP_GRAPHQL_URI}/graphql`,
@@ -14,7 +16,9 @@ const root = ReactDOM.createRoot(
 );
 root.render(
   <ApolloProvider client={client}>
-    <App />
+    <SnackbarProvider maxSnack={1}>
+      <App />
+    </SnackbarProvider>
   </ApolloProvider>
 );
 

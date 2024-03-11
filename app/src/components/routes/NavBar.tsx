@@ -14,8 +14,8 @@ const NavBar: FC = () => {
   };
 
   return (
-    <nav className="h-24 flex items-center justify-between bg-80 px-8 relative">
-      <div className="absolute flex md:w-full md:justify-center md:items-center">
+    <nav className="h-24 flex items-center w-full justify-between bg-80 px-8 relative md:justify-center md:items-center">
+      <div className="absolute flex">
         <NavLink
           to={authContext?.isAdmin ? "/manage" : "/"}
           className="flex justify-center lg:w-56 md:w-52 w-48"

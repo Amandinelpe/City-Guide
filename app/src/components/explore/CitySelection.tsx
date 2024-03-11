@@ -57,7 +57,7 @@ export const CitySelection: React.FC<Props> = ({
     useState<CityDescription>(FranceDescription);
 
   return (
-    <div className="flex md:flex-row flex-col justify-between items-start w-screen md:w-full md:h-screen lg:px-12 md:px-4 gap-6">
+    <div className="flex md:flex-row flex-col justify-between items-start w-full md:w-full md:h-screen lg:px-12 md:px-4 gap-6">
       {isLoaded ? (
         <GoogleMap
           mapContainerStyle={{

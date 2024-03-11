@@ -3,30 +3,39 @@ import { CreateCityInput } from './dto/create-city.input';
 import { InjectRepository } from '@nestjs/typeorm';
 import { City } from './entities/city.entity';
 import { Repository } from 'typeorm';
+import { UpdateCityInput } from './dto/update-city.input';
 
 @Injectable()
 export class CitiesService {
-  constructor(@InjectRepository(City) private readonly cityRepository: Repository<City>) {}
-  
-  create(createCityInput: CreateCityInput) {
+  constructor(@InjectRepository(City) private readonly cityRepository: Repository<City>) { }
+
+  async create(createCityInput: CreateCityInput): Promise<City> {
     const newCity = this.cityRepository.create(createCityInput);
 
-    return this.cityRepository.save(newCity);
+    return await this.cityRepository.save(newCity);
   }
 
   async findAll(): Promise<City[]> {
-    return this.cityRepository.find();
+    return await this.cityRepository.find();
   }
 
-  findOne(id: string): Promise<City> {
-    return this.cityRepository.findOneByOrFail({ id });
+  async findOne(id: string): Promise<City> {
+    return await this.cityRepository.findOneByOrFail({ id });
   }
 
-  remove(id: string) {
-    const existingCity = this.cityRepository.findOneByOrFail({ id });
-    
-    this.cityRepository.delete(id);
-    
+  async update(id: string, updateCityInput: UpdateCityInput): Promise<City> {
+    const existingCity = await this.cityRepository.findOneByOrFail({ id });
+
+    await this.cityRepository.update(id, updateCityInput);
+
+    return existingCity;
+  }
+
+  async remove(id: string): Promise<City> {
+    const existingCity = await this.cityRepository.findOneByOrFail({ id });
+
+    await this.cityRepository.delete(id);
+
     return existingCity;
   }
 }

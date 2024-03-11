@@ -4,6 +4,7 @@ export const GET_PLACE_TYPES = gql`
   query {
     placeTypes {
       id
+      googlePlaceTypeName
       name
       activated
     }

@@ -1,13 +1,16 @@
 import { InputType, Field, ID } from '@nestjs/graphql';
 
 @InputType()
-export class UpdatePlaceTypeInput {
+export class UpdatePlaceInput {
   @Field(() => ID)
   id: string;
 
   @Field(() => String)
   name: string;
 
-  @Field(() => Boolean, { defaultValue: false })
-  activated: boolean;
+  @Field(() => ID)
+  placeTypeId: string;
+
+  @Field(() => ID)
+  cityId: string;
 }

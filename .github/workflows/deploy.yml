@@ -25,7 +25,6 @@ jobs:
         ssh -o StrictHostKeyChecking=no ${{ secrets.USERNAME }}@${{ secrets.HOST }} << 'EOF'
         cd /home/debian/apps/City-Guide
         npm run stop
-        npm run clean
         git pull origin main
         
         cd /home/debian/apps/City-Guide/app

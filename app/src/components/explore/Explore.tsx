@@ -155,7 +155,7 @@ export const Explore = () => {
           />
         )}
         {sectionIndex === 1 && (
-          <div className="flex flex-col md:flex-row justify-start items-center w-screen md:w-full md:h-screen lg:px-12 md:px-4 gap-6">
+          <div className="flex flex-col md:flex-row justify-start items-center w-full md:w-full md:h-screen lg:px-12 md:px-4 gap-6">
             <button
               className="flex flex-row items-center justify-center bg-blue text-white rounded-full pl-3 pr-1 py-2 shadow-lg"
               onClick={() => {
