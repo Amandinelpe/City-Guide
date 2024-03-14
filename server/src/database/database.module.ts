@@ -1,12 +1,12 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule, TypeOrmModuleOptions } from '@nestjs/typeorm';
-import { City } from 'src/cities/entities/city.entity';
-import { PlaceType } from 'src/place-types/entities/place-type.entity';
-import { Place } from 'src/places/entities/place.entity';
-import { Review } from 'src/reviews/entities/review.entity';
-import { Role } from 'src/users/entities/role.entity';
-import { User } from 'src/users/entities/user.entity';
+import { City } from '../cities/entities/city.entity';
+import { PlaceType } from '../place-types/entities/place-type.entity';
+import { Place } from '../places/entities/place.entity';
+import { Review } from '../reviews/entities/review.entity';
+import { Role } from '../users/entities/role.entity';
+import { User } from '../users/entities/user.entity';
 
 @Module({
   imports: [

@@ -64,9 +64,7 @@ export const ManagePlaceTypes = () => {
             },
           },
         });
-        console.log("Données mises à jour avec succès !");
       } catch (error) {
-        console.error("Erreur lors de la mise à jour des données :", error);
       }
     }
   };

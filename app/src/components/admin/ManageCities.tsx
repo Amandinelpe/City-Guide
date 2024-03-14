@@ -192,9 +192,6 @@ export const ManageCities = () => {
             className="flex flex-col gap-6 mt-8"
             onSubmit={(e) => {
               e.preventDefault();
-
-              // update mode
-
               if (!selectedCity) return;
 
               if (image) {

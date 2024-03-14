@@ -20,7 +20,6 @@ const CustomFloatingButton = (
     if (footerRect) {
       const distanceFromBottom = window.innerHeight - footerRect.top;
       if (distanceFromBottom > 0) {
-        console.log(footerHeight);
         setFabBottom(`${distanceFromBottom + 32}px`);
         setIsAboveFooter(false);
       } else {

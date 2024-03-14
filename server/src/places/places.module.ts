@@ -3,11 +3,11 @@ import { PlacesService } from './places.service';
 import { PlacesResolver } from './places.resolver';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Place } from './entities/place.entity';
-import { City } from '../cities/entities/city.entity';
-import { PlaceType } from '../place-types/entities/place-type.entity';
+import { PlaceTypesService } from '../place-types/place-types.service';
+import { CitiesService } from '../cities/cities.service';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Place, PlaceType, City])],
-  providers: [PlacesResolver, PlacesService],
+  imports: [TypeOrmModule.forFeature([Place])],
+  providers: [PlacesResolver, PlacesService, CitiesService, PlaceTypesService],
 })
-export class PlacesModule {}
+export class PlacesModule { }

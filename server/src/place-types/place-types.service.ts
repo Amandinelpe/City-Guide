@@ -7,7 +7,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 
 @Injectable()
 export class PlaceTypesService {
-  constructor(@InjectRepository(PlaceType) private readonly placeTypeRepository: Repository<PlaceType>) {}
+  constructor(@InjectRepository(PlaceType) private readonly placeTypeRepository: Repository<PlaceType>) { }
 
   create(createPlaceTypeInput: CreatePlaceTypeInput) {
     const newPlaceType = this.placeTypeRepository.create(createPlaceTypeInput);
@@ -19,23 +19,23 @@ export class PlaceTypesService {
     return this.placeTypeRepository.find();
   }
 
-  findOne(id: string) {
-    return this.placeTypeRepository.findOneByOrFail({ id });
+  async findOne(id: string): Promise<PlaceType> {
+    return await this.placeTypeRepository.findOneByOrFail({ id });
   }
 
   update(id: string, updatePlaceTypeInput: UpdatePlaceTypeInput) {
     const existingPlaceType = this.placeTypeRepository.findOneByOrFail({ id });
 
     this.placeTypeRepository.update(id, updatePlaceTypeInput);
-    
+
     return existingPlaceType;
   }
 
   remove(id: string) {
     const existingPlaceType = this.placeTypeRepository.findOneByOrFail({ id });
-    
+
     this.placeTypeRepository.delete(id);
-    
+
     return existingPlaceType;
   }
 }

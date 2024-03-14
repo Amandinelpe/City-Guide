@@ -13,7 +13,6 @@ const ImageCellEditor = ({
   onValueChange,
   stopEditing
 }: ImageCellEditorProps) => {
-  // const [image, setImage] = useState<File>();
   const [preview, setPreview] = useState("");
 
   const handleImageChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -21,7 +20,6 @@ const ImageCellEditor = ({
     if (file) {
       const reader = new FileReader();
       reader.onloadend = () => {
-        // setImage(reader.result as string);
         onValueChange(reader.result as string);
         stopEditing();
       };
@@ -40,7 +38,6 @@ const ImageCellEditor = ({
         onChange={(e) => {
           if (e.target.files && e.target.files[0]) {
             const file = e.target.files[0];
-            // setImage(file);
             setPreview(URL.createObjectURL(file));
           }
         }}
