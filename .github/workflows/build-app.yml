@@ -6,12 +6,6 @@ on:
       image_name:
         type: string
         required: true
-      graphql_api_url:
-        type: string
-        required: true
-      fileupload_api_url:
-        type: string
-        required: true
     secrets:
       DOCKERHUB_USERNAME:
         required: true
