@@ -1,4 +1,4 @@
-name: Test, compile and push client and server to production
+name: Test, compile and push app and server to production
 
 on:
   push:
@@ -19,7 +19,7 @@ jobs:
     with:
       image_name: city-guide-server
 
-  build-and-push-client:
+  build-and-push-app:
     needs:
       - tests
     uses: Amandinelpe/City-Guide/.github/workflows/build-app.yml@main
@@ -29,9 +29,10 @@ jobs:
     with:
       image_name: city-guide-app
 
-  push-server:
+  push-on-vps:
     needs:
-      - tests
+      - build-and-push-server
+      - build-and-push-app
     uses: Amandinelpe/City-Guide/.github/workflows/deploy.yml@main
     secrets:
       SSH_KEY: ${{ secrets.SSH_KEY }}
