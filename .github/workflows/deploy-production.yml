@@ -9,6 +9,26 @@ jobs:
   tests:
     uses: Amandinelpe/City-Guide/.github/workflows/tests.yml@main
 
+  build-and-push-server:
+    needs:
+      - tests
+    uses: Amandinelpe/City-Guide/.github/workflows/build-server.yml@main
+    secrets:
+      DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
+      DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
+    with:
+      image_name: city-guide-server
+
+  build-and-push-client:
+    needs:
+      - tests
+    uses: Amandinelpe/City-Guide/.github/workflows/build-app.yml@main
+    secrets:
+      DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
+      DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
+    with:
+      image_name: city-guide-app
+
   push-server:
     needs:
       - tests
