@@ -9,20 +9,10 @@ jobs:
   tests:
     uses: Amandinelpe/City-Guide/.github/workflows/tests.yml@main
 
-  build-and-push-server:
+  build-and-push-on-dockerhub:
     needs:
       - tests
-    uses: Amandinelpe/City-Guide/.github/workflows/build-server.yml@main
-    secrets:
-      DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
-      DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
-    with:
-      image_name: ${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.DOCKER_CLIENT_PRODUCTION_IMAGE_NAME }}
-
-  build-and-push-app:
-    needs:
-      - tests
-    uses: Amandinelpe/City-Guide/.github/workflows/build-app.yml@main
+    uses: Amandinelpe/City-Guide/.github/workflows/build.yml@main
     secrets:
       DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
       DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
@@ -31,8 +21,7 @@ jobs:
 
   push-on-vps:
     needs:
-      - build-and-push-server
-      - build-and-push-app
+      - build-and-push-on-dockerhub
     uses: Amandinelpe/City-Guide/.github/workflows/deploy.yml@main
     secrets:
       SSH_KEY: ${{ secrets.SSH_KEY }}
