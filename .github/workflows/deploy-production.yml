@@ -1,1 +1,15 @@
+name: Test, compile and push client and server to production
 
+on:
+  push:
+    branches: ['main']
+  workflow_dispatch:
+
+jobs:
+  tests:
+    uses: Amandinelpe/City-Guide/.github/workflows/tests.yml@main
+
+  push-server:
+    needs:
+      - tests
+    uses: Amandinelpe/City-Guide/.github/workflows/deploy.yml@main
