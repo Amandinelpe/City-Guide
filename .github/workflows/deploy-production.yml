@@ -17,7 +17,7 @@ jobs:
       DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
       DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
     with:
-      image_name: ${{ secrets.DOCKERHUB_USERNAME }}/city-guide-app
+      image_name: "${{ secrets.DOCKERHUB_USERNAME }}/city-guide-app"
 
   build-and-push-client:
       needs:
@@ -25,9 +25,9 @@ jobs:
       uses: Amandinelpe/City-Guide/.github/workflows/build-client.yml@main
       secrets:
         DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
-        DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
+        DOCKERHUB_TOKEN: ${{secrets.DOCKERHUB_TOKEN }}
       with:
-        image_name: ${{ secrets.DOCKERHUB_USERNAME }}/city-guide-server
+        image_name: "${{ secrets.DOCKERHUB_USERNAME }}/city-guide-server"
 
   push-on-vps:
     needs:
