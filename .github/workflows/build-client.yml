@@ -36,3 +36,6 @@ jobs:
           context: app/
           file: Dockerfile
           tags: amandinelpe/city-guide:latest
+          build-args:
+            REACT_APP_GRAPHQL_URI=${{ secrets.REACT_APP_GRAPHQL_URI }}
+            REACT_GOOGLE_API_MAPS_KEY=${{ secrets.REACT_GOOGLE_API_MAPS_KEY }}
