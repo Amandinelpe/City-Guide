@@ -32,3 +32,13 @@ jobs:
           context: ./server
           file: Dockerfile
           tags: ${{ inputs.image_name }}
+          build-args:
+            SERVER_PORT=${{ secrets.SERVER_PORT }}
+            DATABASE_TYPE=${{ secrets.DATABASE_TYPE }}
+            DATABASE_HOST=${{ secrets.DATABASE_HOST }}
+            DATABASE_PORT=${{ secrets.DATABASE_PORT }}
+            DATABASE_USERNAME=${{ secrets.DATABASE_USERNAME }}
+            DATABASE_PASSWORD=${{ secrets.DATABASE_PASSWORD }}
+            DATABASE_NAME=${{ secrets.DATABASE_NAME }}
+            JWT_SECRET=${{ secrets.JWT_SECRET }}
+            CORS_ALLOWED_ORIGINS=${{ secrets.CORS_ALLOWED_ORIGINS }}
