@@ -44,5 +44,6 @@ jobs:
           docker pull ${{ secrets.DOCKERHUB_USERNAME }}/city-guide-server:latest
           docker pull ${{ secrets.DOCKERHUB_USERNAME }}/city-guide-app:latest
           cd /home/debian/
+          docker compose down
           docker compose up -d
           EOF
