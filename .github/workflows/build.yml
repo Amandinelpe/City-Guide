@@ -11,9 +11,26 @@ on:
         required: true
       REACT_GOOGLE_API_MAPS_KEY:
         required: true
-
+      SERVER_PORT:
+        required: true
+      DATABASE_TYPE:
+        required: true
+      DATABASE_HOST:
+        required: true
+      DATABASE_PORT:
+        required: true
+      DATABASE_USERNAME:
+        required: true
+      DATABASE_PASSWORD:
+        required: true
+      DATABASE_NAME:
+        required: true
+      JWT_SECRET:
+        required: true
+      CORS_ALLOWED_ORIGINS:
+        required: true
 jobs:
-  build-and-push-app:
+  build-and-push-server:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -34,12 +51,21 @@ jobs:
       - name: Build and push app Docker image
         uses: docker/build-push-action@v4
         with:
-          context: ./app
+          context: ./server
           file: ./app/Dockerfile
           push: true
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/city-guide-app:latest
-
-  build-and-push-server:
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/city-guide-server:latest
+          build-args:
+            SERVER_PORT=${{ secrets.SERVER_PORT }}
+            DATABASE_TYPE=${{ secrets.DATABASE_TYPE }}
+            DATABASE_HOST=${{ secrets.DATABASE_HOST }}
+            DATABASE_PORT=${{ secrets.DATABASE_PORT }}
+            DATABASE_USERNAME=${{ secrets.DATABASE_USERNAME }}
+            DATABASE_PASSWORD=${{ secrets.DATABASE_PASSWORD }}
+            DATABASE_NAME=${{ secrets.DATABASE_NAME }}
+            JWT_SECRET=${{ secrets.JWT_SECRET }}
+            CORS_ALLOWED_ORIGINS=${{ secrets.CORS_ALLOWED_ORIGINS }}
+  build-and-push-app:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -60,10 +86,10 @@ jobs:
       - name: Build and push server Docker image
         uses: docker/build-push-action@v4
         with:
-          context: ./server
+          context: ./app
           file: ./server/Dockerfile
           push: true
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/city-guide-server:latest
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/city-guide-app:latest
           build-args:
             REACT_APP_GRAPHQL_URI=${{ secrets.REACT_APP_GRAPHQL_URI }}
             REACT_GOOGLE_API_MAPS_KEY=${{ secrets.REACT_GOOGLE_API_MAPS_KEY }}
