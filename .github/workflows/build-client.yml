@@ -11,7 +11,10 @@ on:
         required: true
       DOCKERHUB_TOKEN:
         required: true
-
+      REACT_APP_GRAPHQL_URI:
+        required: true
+      REACT_GOOGLE_API_MAPS_KEY:
+        required: true
 jobs:
   docker:
     runs-on: ubuntu-latest
