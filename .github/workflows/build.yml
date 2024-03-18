@@ -1,0 +1,60 @@
+name: Build and Push to DockerHub
+
+on:
+  push:
+    branches:
+      - main  # ou toute autre branche où vous souhaitez déclencher ce workflow
+  workflow_dispatch:
+
+jobs:
+  build-and-push-app:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v3
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Login to Docker Hub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Build and push app Docker image
+        uses: docker/build-push-action@v4
+        with:
+          context: ./app
+          file: ./app/Dockerfile
+          push: true
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/city-guide-app:latest
+
+  build-and-push-server:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v3
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Login to Docker Hub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Build and push server Docker image
+        uses: docker/build-push-action@v4
+        with:
+          context: ./server
+          file: ./server/Dockerfile
+          push: true
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/city-guide-server:latest
