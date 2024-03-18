@@ -29,6 +29,6 @@ jobs:
         uses: docker/build-push-action@v4
         with:
           push: true
-          context: ./
-          file: ./Dockerfile
+          context: ./app
+          file: Dockerfile
           tags: ${{ inputs.image_name }}
