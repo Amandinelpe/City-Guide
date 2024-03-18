@@ -1,10 +1,7 @@
 name: Build and Push to DockerHub
 
 on:
-  push:
-    branches:
-      - main  # ou toute autre branche où vous souhaitez déclencher ce workflow
-  workflow_dispatch:
+  workflow_call:
 
 jobs:
   build-and-push-app:
