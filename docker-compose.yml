@@ -8,6 +8,8 @@ services:
       - 4000:4000
     volumes:
       - ./server/media:/app/media
+    env_file:
+      - .env
 
   app:
     image: amandinelpe/city-guide-app
@@ -16,6 +18,8 @@ services:
     environment:
       - CHOKIDAR_USEPOLLING=true
       - WATCHPACK_POLLING=true
+    env_file:
+      - .env
 
   db:
     image: postgres
