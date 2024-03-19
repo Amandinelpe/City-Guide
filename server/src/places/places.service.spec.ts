@@ -7,12 +7,13 @@ import { CitiesService } from '../cities/cities.service';
 import { PlaceTypesService } from '../place-types/place-types.service';
 import { PlaceType } from '../place-types/entities/place-type.entity';
 import { City } from '../cities/entities/city.entity';
+import { get } from 'http';
 
 describe('PlacesService', () => {
   let service: PlacesService;
   let placeRepo: Partial<Record<keyof Repository<Place>, jest.Mock>>;
-  let citiesService: Partial<CitiesService>;
-  let placeTypesService: Partial<PlaceTypesService>;
+  let citiesRepo: Partial<Record<keyof Repository<City>, jest.Mock>>;
+  let placeTypesRepo: Partial<Record<keyof Repository<PlaceType>, jest.Mock>>;
 
   beforeEach(async () => {
     placeRepo = {
@@ -24,13 +25,13 @@ describe('PlacesService', () => {
       delete: jest.fn(),
     } as Partial<Record<keyof Repository<Place>, jest.Mock>>;
 
-    citiesService = {
-      findOne: jest.fn(),
-    } as Partial<CitiesService> as jest.Mocked<CitiesService>;
+    citiesRepo = {
+      findOneByOrFail: jest.fn(),
+    } as Partial<Record<keyof Repository<City>, jest.Mock>>;
 
-    placeTypesService = {
-      findOne: jest.fn(),
-    } as Partial<PlaceTypesService> as jest.Mocked<PlaceTypesService>;
+    placeTypesRepo = {
+      findOneByOrFail: jest.fn(),
+    } as Partial<Record<keyof Repository<PlaceType>, jest.Mock>>;
 
     const module = await Test.createTestingModule({
       providers: [
@@ -40,12 +41,12 @@ describe('PlacesService', () => {
           useValue: placeRepo,
         },
         {
-          provide: CitiesService,
-          useValue: citiesService,
+          provide: getRepositoryToken(City),
+          useValue: citiesRepo,
         },
         {
-          provide: PlaceTypesService,
-          useValue: placeTypesService,
+          provide: getRepositoryToken(PlaceType),
+          useValue: placeTypesRepo,
         },
       ],
     }).compile();
@@ -68,16 +69,16 @@ describe('PlacesService', () => {
     const expectedPlace = new Place();
     Object.assign(expectedPlace, placeInput, { placeType, city });
 
-    placeTypesService.findOne = jest.fn().mockResolvedValue(placeType);
-    citiesService.findOne = jest.fn().mockResolvedValue(city);
+    placeTypesRepo.findOneByOrFail = jest.fn().mockResolvedValue(placeType);
+    citiesRepo.findOneByOrFail = jest.fn().mockResolvedValue(city);
     placeRepo.create.mockReturnValue(expectedPlace);
     placeRepo.save.mockResolvedValue(expectedPlace);
 
     const result = await service.create(placeInput);
 
     expect(result).toEqual(expectedPlace);
-    expect(placeTypesService.findOne).toHaveBeenCalledWith(placeInput.placeTypeId);
-    expect(citiesService.findOne).toHaveBeenCalledWith(placeInput.cityId);
+    expect(placeTypesRepo.findOneByOrFail).toHaveBeenCalledWith({ id: placeInput.placeTypeId });
+    expect(citiesRepo.findOneByOrFail).toHaveBeenCalledWith({ id: placeInput.cityId });
     expect(placeRepo.create).toHaveBeenCalledWith({
       ...placeInput,
       placeType,

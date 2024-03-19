@@ -12,8 +12,14 @@ enum Menu {
   PLACES = "places",
 }
 
+const sections = [
+  { title: "Catégories", value: Menu.CATEGORIES, element: <ManagePlaceTypes /> },
+  { title: "Villes", value: Menu.CITIES, element: <ManageCities /> },
+  { title: "Points d'intérêt", value: Menu.PLACES, element: <ManagePlaces /> },
+];
+
 export const Manage = () => {
-  const [activeMenu, setActiveMenu] = useState(Menu.CATEGORIES);
+  const [activeMenu, setActiveMenu] = useState<Menu>(Menu.CATEGORIES);
 
   const handleMenuClick = (menu: Menu) => {
     setActiveMenu(menu);
@@ -24,40 +30,30 @@ export const Manage = () => {
       <div className="mt-16">
         <div className="h-12 px-12">
           <div className="flex flex-row justify-around border-b-2 border-b-lightGray h-full text-lg">
-            <button
-              onClick={() => handleMenuClick(Menu.CATEGORIES)}
-              className={`${activeMenu === Menu.CATEGORIES
-                ? "border-b-2 text-blue font-bold border-b-blue"
-                : ""
-                } px-6`}
-            >
-              Catégories
-            </button>
-            <button
-              onClick={() => handleMenuClick(Menu.CITIES)}
-              className={`${activeMenu === Menu.CITIES
-                ? "border-b-2 text-blue font-bold border-b-blue"
-                : ""
-                } px-6`}
-            >
-              Villes
-            </button>
-            <button
-              onClick={() => handleMenuClick(Menu.PLACES)}
-              className={`${activeMenu === Menu.PLACES
-                ? "border-b-2 text-blue font-bold border-b-blue"
-                : ""
-                } px-6`}
-            >
-              Points d'intérêt
-            </button>
+            {sections.map((section) => (
+              <button
+                key={section.value}
+                onClick={() => handleMenuClick(section.value)}
+                className={`${activeMenu === section.value
+                  ? "border-b-2 text-blue font-bold border-b-blue"
+                  : ""
+                  } px-6`}
+              >
+                {section.title}
+              </button>
+            ))}
           </div>
         </div>
 
         <div className="mt-8">
-          {activeMenu === Menu.CATEGORIES && <ManagePlaceTypes />}
-          {activeMenu === Menu.CITIES && <ManageCities />}
-          {activeMenu === Menu.PLACES && <ManagePlaces />}
+          {sections.map((section) => (
+            <div
+              key={section.value}
+              className={`${activeMenu === section.value ? "block" : "hidden"}`}
+            >
+              {section.element}
+            </div>
+          ))}
         </div>
       </div>
     </div>
