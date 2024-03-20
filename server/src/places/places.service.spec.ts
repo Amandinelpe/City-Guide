@@ -3,11 +3,8 @@ import { Repository } from 'typeorm';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import { PlacesService } from './places.service';
 import { Place } from './entities/place.entity';
-import { CitiesService } from '../cities/cities.service';
-import { PlaceTypesService } from '../place-types/place-types.service';
 import { PlaceType } from '../place-types/entities/place-type.entity';
 import { City } from '../cities/entities/city.entity';
-import { get } from 'http';
 
 describe('PlacesService', () => {
   let service: PlacesService;

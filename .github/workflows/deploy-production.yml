@@ -32,8 +32,8 @@ jobs:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USERNAME }}
           key: ${{ secrets.SSH_KEY }}
-          source: ${{ github.workspace }}/docker-compose.yml
-          target: /home/debian/
+          source: ${{ github.workspace }}/docker-compose.production.yml
+          target: /home/debian/docker-compose.yml
       - name: Setup SSH
         uses: webfactory/ssh-agent@v0.5.3
         with:
