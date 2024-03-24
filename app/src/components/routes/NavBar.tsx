@@ -17,7 +17,7 @@ const NavBar: FC = () => {
     <nav className="h-24 flex items-center w-full justify-between bg-80 px-8 relative md:justify-center md:items-center">
       <div className="absolute flex">
         <NavLink
-          to={authContext?.isAdmin ? "/manage" : "/"}
+          to={authContext?.isAdmin ? "/manage" : authContext?.loggedIn ? "/explore" : "/"}
           className="flex justify-center lg:w-56 md:w-52 w-48"
         >
           <img src={cityLogo} alt="logo city" />

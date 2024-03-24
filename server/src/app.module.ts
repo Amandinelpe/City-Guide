@@ -50,4 +50,4 @@ import { extname } from 'path';
   ],
   controllers: [UploadController, FilesController],
 })
-export class AppModule {}
+export class AppModule { }

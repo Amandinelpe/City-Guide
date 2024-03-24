@@ -7,6 +7,7 @@ import Autocomplete from "react-google-autocomplete";
 import { Modal, Typography, Button, Box } from "@mui/material";
 import { useSnackbar } from 'notistack';
 import DeleteIcon from "@mui/icons-material/Delete";
+import AddIcon from "@mui/icons-material/Add";
 
 import CustomFloatingButton from "../common/CustomFloatingButton";
 import ImageCellRenderer from "../common/ImageCellRenderer";
@@ -162,7 +163,7 @@ export const ManageCities = () => {
   return (
     <div className="flex flex-col pt-6 gap-8 items-start px-12">
       <div className="w-full flex flex-col justify-center items-center gap-8">
-        <CustomFloatingButton handlerButtonAction={handleAddCity} />
+        <CustomFloatingButton icon={<AddIcon />} handlerButtonAction={handleAddCity} />
         <div
           className="ag-theme-quartz"
           style={{ width: '80%', height: '500px' }}

@@ -1,15 +1,15 @@
 module.exports = {
   moduleFileExtensions: ['js', 'json', 'ts'],
   rootDir: '.',
-  testRegex: '.spec.ts$', // Exécute tous les fichiers qui finissent par .spec.ts
+  testRegex: '.spec.ts$',
   transform: {
-    '^.+\\.(t|j)s$': 'ts-jest', // Utilise ts-jest pour transformer les fichiers ts en js
+    '^.+\\.(t|j)s$': 'ts-jest',
   },
   collectCoverageFrom: ['**/*.(t|j)s'],
   coverageDirectory: '../coverage',
-  testEnvironment: 'node', // Définit l'environnement de test à node
+  testEnvironment: 'node',
   moduleNameMapper: {
-    '^@app/(.*)$': '<rootDir>/src/$1', // Si vous utilisez des alias de chemin dans tsconfig
+    '^@app/(.*)$': '<rootDir>/src/$1',
   },
   coveragePathIgnorePatterns: ['/node_modules/'],
 };

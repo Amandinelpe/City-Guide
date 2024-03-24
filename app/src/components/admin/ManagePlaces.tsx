@@ -4,6 +4,7 @@ import Autocomplete from "react-google-autocomplete";
 import AutoComplete from "@mui/material/Autocomplete";
 import { Box, Button, Modal, SelectChangeEvent, TextField, Typography } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
+import AddIcon from "@mui/icons-material/Add";
 import { AgGridReact } from "ag-grid-react";
 import { ColDef } from "ag-grid-community";
 import { useSnackbar } from 'notistack';
@@ -183,7 +184,7 @@ export const ManagePlaces = () => {
   return (
     <div className="flex flex-col pt-6 gap-8 items-start px-12">
       <div className="w-full flex flex-col justify-center items-center gap-8">
-        <CustomFloatingButton handlerButtonAction={handleOpenModal} />
+        <CustomFloatingButton icon={<AddIcon />} handlerButtonAction={handleOpenModal} />
         <div
           className="ag-theme-quartz"
           style={{ width: '100%', height: '500px' }}
