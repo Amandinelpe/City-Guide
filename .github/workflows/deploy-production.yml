@@ -65,5 +65,5 @@ jobs:
           JWT_SECRET=${{ secrets.JWT_SECRET }}
           CORS_ALLOWED_ORIGINS=${{ secrets.CORS_ALLOWED_ORIGINS }}
           EOL
-          docker compose -f docker-compose.production.yml up -d --force-recreate
+          docker compose -f docker-compose.production.yml up --force-recreate --remove-orphans -d
           EOF
