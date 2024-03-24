@@ -24,8 +24,15 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
-      - name: List files
-        run: ls -lR
+      - name: Transfer medias to VPS
+        uses: appleboy/scp-action@master
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          key: ${{ secrets.SSH_KEY }}
+          source: ${{ github.workspace }}/server/media/*
+          target: /home/debian/server/media
+          strip_components: 4
       - name: Transfer docker-compose.yml to VPS
         uses: appleboy/scp-action@master
         with:
@@ -34,6 +41,7 @@ jobs:
           key: ${{ secrets.SSH_KEY }}
           source: ${{ github.workspace }}/docker-compose.production.yml
           target: /home/debian
+          strip_components: 2
       - name: Setup SSH
         uses: webfactory/ssh-agent@v0.5.3
         with:
@@ -43,7 +51,7 @@ jobs:
           ssh -o StrictHostKeyChecking=no ${{ secrets.USERNAME }}@${{ secrets.HOST }} << 'EOF'
           docker pull ${{ secrets.DOCKERHUB_USERNAME }}/city-guide-server:latest
           docker pull ${{ secrets.DOCKERHUB_USERNAME }}/city-guide-app:latest
-          cd /home/debian/github/workspace
+          cd /home/debian
           cat > .env << 'EOL'
           REACT_APP_GRAPHQL_URI=${{ secrets.REACT_APP_GRAPHQL_URI }}
           REACT_GOOGLE_API_MAPS_KEY=${{ secrets.REACT_GOOGLE_API_MAPS_KEY }}
