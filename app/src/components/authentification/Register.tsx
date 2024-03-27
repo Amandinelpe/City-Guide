@@ -44,6 +44,16 @@ export const Register: FC = () => {
   }
 
   const onSubmit = async () => {
+    if (!verificationCheckPassword) {
+      setPasswordError("Le mot de passe ne respecte pas les conditions requises");
+      return;
+    }
+
+    if (!verificationConfirmationPassword) {
+      setPasswordError("La confirmation du mot de passe ne correspond pas");
+      return;
+    }
+
     await register({
       variables: {
         input: {
