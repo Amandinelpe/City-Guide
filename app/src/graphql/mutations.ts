@@ -41,6 +41,23 @@ export const ADD_PLACE = gql`
   }
 `;
 
+export const UPDATE_PLACE = gql`
+  mutation UpdatePlace($input: UpdatePlaceInput!) {
+    updatePlace(updatePlaceInput: $input) {
+      id
+      name
+      placeType {
+        id
+        name
+      }
+      city {
+        id
+        name
+      }
+    }
+  }
+`;
+
 export const REMOVE_PLACE = gql`
   mutation RemovePlace($input: ID!) {
     removePlace(id: $input) {
@@ -69,23 +86,6 @@ export const UPDATE_CITY = gql`
       latitude
       longitude
       image
-    }
-  }
-`;
-
-export const UPDATE_PLACE = gql`
-  mutation UpdatePlace($input: UpdatePlaceInput!) {
-    updatePlace(updatePlaceInput: $input) {
-      id
-      name
-      placeType {
-        id
-        name
-      }
-      city {
-        id
-        name
-      }
     }
   }
 `;

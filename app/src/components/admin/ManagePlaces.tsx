@@ -10,7 +10,7 @@ import { ColDef } from "ag-grid-community";
 import { useSnackbar } from 'notistack';
 import { ADD_PLACE, REMOVE_PLACE, UPDATE_PLACE } from "../../graphql/mutations";
 import { GET_CITIES, GET_PLACES, GET_PLACE_TYPES } from "../../graphql/queries";
-import { Place } from "../../models/place.model";
+import { IPlace } from "../../models/place.model";
 import { ICity } from "../../models/city.model";
 import { PlaceType } from "../../models/place-type.model";
 import CustomFloatingButton from "../common/CustomFloatingButton";
@@ -39,7 +39,7 @@ export const ManagePlaces = () => {
   const cities = citiesData?.cities as ICity[];
   const placeTypes = placeTypesData?.placeTypes as PlaceType[];
   const places = useMemo(() => {
-    return placesData?.places.map((p: Place) => ({ ...p })) || [];
+    return placesData?.places.map((p: IPlace) => ({ ...p })) || [];
   }, [placesData]);
 
   const defaultColDef = useMemo(() => {
@@ -130,7 +130,7 @@ export const ManagePlaces = () => {
     refetchQueries: [{ query: GET_PLACES }],
   });
 
-  const handlePlaceTypeChange = async (e: SelectChangeEvent, data: Place) => {
+  const handlePlaceTypeChange = async (e: SelectChangeEvent, data: IPlace) => {
     await updatePlace({
       variables: {
         input: {
@@ -143,7 +143,7 @@ export const ManagePlaces = () => {
     });
   };
 
-  const handleCityChange = async (e: SelectChangeEvent, data: Place) => {
+  const handleCityChange = async (e: SelectChangeEvent, data: IPlace) => {
     await updatePlace({
       variables: {
         input: {

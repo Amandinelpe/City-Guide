@@ -12,11 +12,6 @@ export class Place {
     @Field(() => ID)
     id: string;
 
-    @BeforeInsert()
-    createUuid() {
-        this.id = uuidv4();
-    }
-
     @Column()
     @Field()
     name: string;
@@ -29,7 +24,7 @@ export class Place {
     @Field(() => Number)
     longitude: number;
 
-    @Column({ nullable: true})
+    @Column({ nullable: true })
     @Field(() => String, { nullable: true })
     address: string;
 
@@ -47,4 +42,9 @@ export class Place {
 
     @Field(() => Number)
     averageRating: number;
+
+    @BeforeInsert()
+    createUuid() {
+        this.id = uuidv4();
+    }
 }

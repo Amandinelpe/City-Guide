@@ -14,12 +14,13 @@ import { motion } from "framer-motion";
 import { GET_CITIES, GET_PLACES_BY_CITY, GET_PLACE_TYPES } from "../../graphql/queries";
 import { CREATE_REVIEW } from "../../graphql/mutations";
 import { ICity } from "../../models/city.model";
-import { Place } from "../../models/place.model";
+import { IPlace } from "../../models/place.model";
 import { Review } from "../../models/review.model";
 import { CitySelection } from "./CitySelection";
 import { IGetCity } from "../../models/get-city.model";
 import CustomFloatingButton from "../common/CustomFloatingButton";
 import { PlaceType } from "../../models/place-type.model";
+import { IGetPlacesByCity } from "../../models/get-places-by-city.model";
 
 const options = {
   zoomControl: false,
@@ -37,7 +38,7 @@ export const Explore = () => {
   });
 
   const [selectedCity, setSelectedCity] = useState<ICity | null>(null);
-  const [selectedPlace, setSelectedPlace] = useState<Place | null>(null);
+  const [selectedPlace, setSelectedPlace] = useState<IPlace | null | undefined>(null);
   const [sectionIndex, setSectionIndex] = useState<number>(0);
   const [reviewComment, setReviewComment] = useState<string>();
   const [reviewRating, setReviewRating] = useState<number | null>(null);
@@ -57,7 +58,7 @@ export const Explore = () => {
     placeDetailRef.current?.scrollIntoView({ behavior: "smooth" });
   };
 
-  const handleSelectedPlace = (place: Place | null) => {
+  const handleSelectedPlace = (place: IPlace | undefined) => {
     setReviewComment("");
     setReviewRating(null);
     setSelectedPlace(place);
@@ -96,7 +97,7 @@ export const Explore = () => {
 
   const { data: getcity } = useQuery<IGetCity>(GET_CITIES);
 
-  const [cityPlaces, setCityPlaces] = useState<Place[] | null>(null);
+  const [cityPlaces, setCityPlaces] = useState<IPlace[] | null>(null);
 
   const variants = {
     enter: (direction: any) => {
@@ -119,15 +120,15 @@ export const Explore = () => {
     },
   };
 
-  useQuery(GET_PLACES_BY_CITY, {
+  useQuery<IGetPlacesByCity>(GET_PLACES_BY_CITY, {
     variables: { cityId: selectedCity?.id },
     skip: !selectedCity?.id,
     onCompleted: (data) => {
-      setCityPlaces(data.placesByCity as Place[]);
+      setCityPlaces(data.placesByCity);
       if (selectedPlace) {
         handleSelectedPlace(
           data.placesByCity.find(
-            (place: Place) => place.id === selectedPlace.id
+            (place: IPlace) => place.id === selectedPlace.id
           )
         );
       }
@@ -302,17 +303,17 @@ export const Explore = () => {
                     ],
                   }}
                 >
-                  {cityPlaces?.filter((place: Place) => {
+                  {cityPlaces?.filter((place: IPlace) => {
                     if (filterPlaceType) {
                       return place.placeType.id === filterPlaceType.id;
                     }
                     return true;
-                  }).filter((place: Place) => {
+                  }).filter((place: IPlace) => {
                     if (filterRating) {
                       return place.averageRating >= filterRating;
                     }
                     return true;
-                  }).map((place: Place) => (
+                  }).map((place: IPlace) => (
                     <Marker
                       key={place.id}
                       position={{ lat: place.latitude, lng: place.longitude }}
@@ -332,7 +333,7 @@ export const Explore = () => {
                         lng: selectedPlace.longitude,
                       }}
                       onCloseClick={() => {
-                        handleSelectedPlace(null);
+                        handleSelectedPlace(undefined);
                       }}
                     >
                       <div className="flex flex-col justify-start items-start gap-2">

@@ -2,7 +2,7 @@ import { ICity } from "./city.model";
 import { PlaceType } from "./place-type.model";
 import { Review } from "./review.model";
 
-export interface Place {
+export interface IPlace {
     id: string;
     name: string;
     latitude: number;

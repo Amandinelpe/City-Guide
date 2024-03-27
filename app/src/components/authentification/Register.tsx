@@ -6,6 +6,8 @@ import { PulseLoader } from "react-spinners";
 import { REGISTER } from "../../graphql/mutations";
 import CustomForm from "../common/CustomForm";
 import CustomInputForm from "../common/CustomInputForm";
+import { motion } from "framer-motion";
+import { PasswordVerificationStep } from "../common/PasswordVerificationStep";
 
 export const Register: FC = () => {
   const { register: registerForm, handleSubmit, watch } = useForm();
@@ -15,8 +17,12 @@ export const Register: FC = () => {
   const password = watch("password");
   const passwordConfirmation = watch("passwordConfirmation");
 
+  const [verificationCheckPassword, setVerificationCheckPassword] = useState<boolean | null>(null);
+  const [verificationConfirmationPassword, setVerificationConfirmationPassword] = useState<boolean | null>(null);
+
   const [passwordError, setPasswordError] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
+  const [showCheckPasswordVerificationSteps, setShowCheckPasswordVerificationSteps] = useState(false);
   const navigate = useNavigate();
 
   const [register, { loading: registerLoading }] = useMutation(REGISTER, {
@@ -29,13 +35,15 @@ export const Register: FC = () => {
     },
   });
 
-  const onSubmit = async () => {
-    if (password !== passwordConfirmation) {
-      setPasswordError("Les mots de passe ne correspondent pas");
-      return;
+  const handleVerificationConfirmationPassword = () => {
+    if (passwordConfirmation !== password) {
+      setVerificationConfirmationPassword(false);
+    } else {
+      setVerificationConfirmationPassword(true);
     }
-    setPasswordError("");
+  }
 
+  const onSubmit = async () => {
     await register({
       variables: {
         input: {
@@ -94,13 +102,27 @@ export const Register: FC = () => {
             type="password"
             label="Mot de passe"
             {...registerForm("password", { required: true })}
+            onFocus={() => setShowCheckPasswordVerificationSteps(true)}
+            onBlur={() => setShowCheckPasswordVerificationSteps(false)}
+            className={`${verificationCheckPassword != null ? verificationCheckPassword ? "border-greenLight" : "border-redLight" : ""}`}
           />
         </div>
+        {showCheckPasswordVerificationSteps && (
+          <motion.div
+            initial={{ y: -20 }}
+            animate={{ y: 0 }}
+            exit={{ y: -20 }}
+          >
+            <PasswordVerificationStep password={password} setVerificationCheckPassword={setVerificationCheckPassword} />
+          </motion.div>
+        )}
         <div className="flex flex-col">
           <CustomInputForm
             type="password"
             label="Confirmation du mot de passe"
             {...registerForm("passwordConfirmation", { required: true })}
+            onBlur={handleVerificationConfirmationPassword}
+            className={`${verificationConfirmationPassword != null ? verificationConfirmationPassword ? "border-greenLight" : "border-redLight" : ""}`}
           />
         </div>
         {passwordError && <div className="text-red">{passwordError}</div>}
